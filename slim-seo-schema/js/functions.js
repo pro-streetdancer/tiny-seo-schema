@@ -1,0 +1,1 @@
+export const inside = ( el, selectors ) => el.matches( selectors ) || el.closest( selectors ) !== null;

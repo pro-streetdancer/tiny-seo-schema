@@ -1,0 +1,93 @@
+{
+    "packages": [
+        {
+            "name": "elightup/plugin-search",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:elightup/plugin-search.git",
+                "reference": "f5f317fb991cc11760ce9f63a423d62f844523c4"
+            },
+            "time": "2023-09-16T07:09:15+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "eLightUp\\PluginSearch\\": "src/"
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "install-path": "../elightup/plugin-search"
+        },
+        {
+            "name": "elightup/plugin-updater",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:elightup/plugin-updater.git",
+                "reference": "d0f6cd7d08a59f1d34eb8f99767c217b27588db0"
+            },
+            "time": "2025-04-01T14:02:54+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "eLightUp\\PluginUpdater\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "install-path": "../elightup/plugin-updater"
+        },
+        {
+            "name": "elightup/twig",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elightup/twig.git",
+                "reference": "588a9d55508d383de47cade5cb0049c809f4750f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elightup/twig/zipball/588a9d55508d383de47cade5cb0049c809f4750f",
+                "reference": "588a9d55508d383de47cade5cb0049c809f4750f",
+                "shasum": ""
+            },
+            "time": "2025-03-17T09:08:24+00:00",
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "mozart": {
+                    "packages": [
+                        "twig/twig"
+                    ],
+                    "dep_directory": "/",
+                    "dep_namespace": "eLightUp\\",
+                    "classmap_prefix": "eLightUp_",
+                    "classmap_directory": "/",
+                    "delete_vendor_directories": true
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "eLightUp\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "source": "https://github.com/elightup/twig/tree/master"
+            },
+            "install-path": "../elightup/twig"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

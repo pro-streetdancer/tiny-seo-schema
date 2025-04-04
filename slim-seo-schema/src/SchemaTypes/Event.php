@@ -1,0 +1,188 @@
+<?php
+namespace SlimSEOPro\Schema\SchemaTypes;
+
+return [
+	[
+		'id'   => 'googleDocs',
+		'type' => 'GoogleDocs',
+		'url'  => 'https://developers.google.com/search/docs/appearance/structured-data/event',
+		'show' => true,
+	],
+	Helper::get_property( 'name', [ 'required' => true ] ),
+	Helper::get_property( 'description' ),
+	[
+		'id'               => 'location',
+		'label'            => __( 'Location', 'slim-seo-schema' ),
+		'tooltip'          => __( 'The location of the event', 'slim-seo-schema' ),
+		'type'             => 'Group',
+		'cloneable'        => true,
+		'cloneItemHeading' => __( 'Location', 'slim-seo-schema' ),
+		'required'         => true,
+		'fields'           => [
+			[
+				'id'        => '@type',
+				'label'     => __( 'Type', 'slim-seo-schema' ),
+				'type'      => 'DataList',
+				'std'       => 'Place',
+				'required'  => true,
+				'dependant' => true,
+				'options'   => [
+					'Place'           => __( 'Physical location', 'slim-seo-schema' ),
+					'VirtualLocation' => __( 'Online', 'slim-seo-schema' ),
+				],
+			],
+			[
+				'id'         => 'url',
+				'label'      => __( 'URL', 'slim-seo-schema' ),
+				'required'   => true,
+				'dependency' => '[@type]:VirtualLocation',
+			],
+			[
+				'label'      => __( 'Name', 'slim-seo-schema' ),
+				'id'         => 'name',
+				'required'   => true,
+				'dependency' => '[@type]:Place',
+			],
+			Helper::get_property( 'address', [
+				'label'      => '',
+				'dependency' => '[@type]:Place',
+				'show'       => true,
+			] ),
+		],
+	],
+	[
+		'id'       => 'startDate',
+		'label'    => __( 'Start date', 'slim-seo-schema' ),
+		'type'     => 'Date',
+		'std'      => '{{ post.date }} ',
+		'tooltip'  => __( 'The start date and start time of the event in ISO-8601 format', 'slim-seo-schema' ),
+		'required' => true,
+	],
+	[
+		'id'      => 'endDate',
+		'label'   => __( 'End date', 'slim-seo-schema' ),
+		'type'    => 'Date',
+		'tooltip' => __( 'The optional end date and end time of the event in ISO-8601 format', 'slim-seo-schema' ),
+		'show'    => true,
+	],
+	[
+		'id'      => 'eventAttendanceMode',
+		'label'   => __( 'Attendance mode', 'slim-seo-schema' ),
+		'show'    => true,
+		'tooltip' => __( 'Indicates whether the event occurs online, offline at a physical location, or a mix of both online and offline.', 'slim-seo-schema' ),
+		'type'    => 'DataList',
+		'options' => [
+			'https://schema.org/OnlineEventAttendanceMode' => __( 'Online', 'slim-seo-schema' ),
+			'https://schema.org/OfflineEventAttendanceMode' => __( 'Offline', 'slim-seo-schema' ),
+			'https://schema.org/MixedEventAttendanceMode'  => __( 'Mixed', 'slim-seo-schema' ),
+		],
+	],
+	[
+		'id'      => 'eventStatus',
+		'label'   => __( 'Status', 'slim-seo-schema' ),
+		'show'    => true,
+		'type'    => 'DataList',
+		'tooltip' => __( 'The status of the event', 'slim-seo-schema' ),
+		'options' => [
+			'https://schema.org/EventCancelled'   => __( 'Cancelled', 'slim-seo-schema' ),
+			'https://schema.org/EventMovedOnline' => __( 'Moved online', 'slim-seo-schema' ),
+			'https://schema.org/EventPostponed'   => __( 'Postponed', 'slim-seo-schema' ),
+			'https://schema.org/EventRescheduled' => __( 'Rescheduled', 'slim-seo-schema' ),
+			'https://schema.org/EventScheduled'   => __( 'Scheduled', 'slim-seo-schema' ),
+		],
+	],
+	Helper::get_property( 'image', [
+		'show'    => true,
+		'tooltip' => __( 'URL of an image or logo for the event or tour. We recommend that images are 1920px wide', 'slim-seo-schema' ),
+	] ),
+	[
+		'id'     => 'offers',
+		'label'  => __( 'Offers', 'slim-seo-schema' ),
+		'type'   => 'Group',
+		'show'   => true,
+		'fields' => [
+			[
+				'id'       => '@type',
+				'std'      => 'Offer',
+				'type'     => 'Hidden',
+				'required' => true,
+			],
+			[
+				'id'       => 'price',
+				'label'    => __( 'Price', 'slim-seo-schema' ),
+				'tooltip'  => __( 'The lowest available price available for your tickets, including service charges and fees', 'slim-seo-schema' ),
+				'required' => true,
+			],
+			[
+				'id'      => 'priceCurrency',
+				'label'   => __( 'Currency', 'slim-seo-schema' ),
+				'show'    => true,
+				'std'     => 'USD',
+				'tooltip' => __( 'The 3-letter ISO 4217 currency code', 'slim-seo-schema' ),
+			],
+			[
+				'id'      => 'availability',
+				'label'   => __( 'Availability', 'slim-seo-schema' ),
+				'type'    => 'DataList',
+				'std'     => 'https://schema.org/InStock',
+				'show'    => true,
+				'options' => [
+					'https://schema.org/InStock'  => __( 'In stock', 'slim-seo-schema' ),
+					'https://schema.org/SoldOut'  => __( 'Sold out', 'slim-seo-schema' ),
+					'https://schema.org/PreOrder' => __( 'Pre order', 'slim-seo-schema' ),
+				],
+			],
+			[
+				'id'      => 'validFrom',
+				'label'   => __( 'Valid from', 'slim-seo-schema' ),
+				'type'    => 'Date',
+				'tooltip' => __( 'The date and time when tickets go on sale (only required on date-restricted offers), in ISO-8601 format', 'slim-seo-schema' ),
+			],
+			Helper::get_property( 'url', [
+				'show'    => true,
+				'tooltip' => __( 'The URL of a page providing the ability to buy tickets', 'slim-seo-schema' ),
+				'std'     => '{{ post.url }}',
+				'show'    => true,
+			] ),
+		],
+	],
+	[
+		'id'      => 'organizer',
+		'label'   => __( 'Organizer', 'slim-seo-schema' ),
+		'tooltip' => __( 'The person or organization that is hosting the event', 'slim-seo-schema' ),
+		'show'    => true,
+		'std'     => '{{ schemas.organization }}',
+	],
+	[
+		'id'               => 'performer',
+		'label'            => __( 'Performers', 'slim-seo-schema' ),
+		'tooltip'          => __( 'The participants performing at the event, such as artists and comedians', 'slim-seo-schema' ),
+		'type'             => 'Group',
+		'cloneable'        => true,
+		'cloneItemHeading' => __( 'Performer', 'slim-seo-schema' ),
+		'fields'           => [
+			[
+				'id'       => '@type',
+				'label'    => __( 'Type', 'slim-seo-schema' ),
+				'std'      => 'Person',
+				'type'     => 'DataList',
+				'required' => true,
+				'options'  => [
+					'Person'          => __( 'Person', 'slim-seo-schema' ),
+					'PerformingGroup' => __( 'Group', 'slim-seo-schema' ),
+				],
+			],
+			Helper::get_property( 'name', [
+				'show' => true,
+				'std'  => '',
+			] ),
+		],
+	],
+	[
+		'id'        => 'previousStartDate',
+		'label'     => __( 'Previous start date', 'slim-seo-schema' ),
+		'type'      => 'Date',
+		'tooltip'   => __( 'The previously scheduled start date for the event if an event has been rescheduled', 'slim-seo-schema' ),
+		'cloneable' => true,
+	],
+];
